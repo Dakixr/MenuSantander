@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle =
             ActionBarDrawerToggle(
                 this, drawerLayout,
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 //                R.drawable.ic_serv_023,
 //                1,
 //                true,
-//                1
+//                0
 //            )
 //        )
 //        sharedList.add(
@@ -97,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 //                R.drawable.ic_ban_089,
 //                4,
 //                false,
-//                2
+//                1
 //            )
 //        )
 //
@@ -105,7 +104,10 @@ class MainActivity : AppCompatActivity() {
 //        val data = Gson().toJson(sharedList)
 //        val editor = shared.edit()
 //        editor.putString("yourFeatures", data)
+//        editor.putInt("otherFeaturesPosition",2)
 //        editor.apply()
+//
+//        /////////////////////////////////////////////////////////////////////////
 
     }
 
@@ -121,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        if (item?.itemId == android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END)
             } else {
@@ -139,11 +141,12 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref: SharedPreferences = getSharedPreferences("features", 0) //Private mode
         val itemList = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("yourFeatures", ""), groupListType)
+        val positionOtherFeatures = sharedPref.getInt("otherFeaturesPosition",4)//TODO CHANGE DEFAULT VALUE
 
         itemList.sort()
 
         selected_items.layoutManager = LinearLayoutManager(this)
-        var mAdapter = DataAdapter(itemList)
+        val mAdapter = DataAdapter(itemList,positionOtherFeatures)
         selected_items.adapter = mAdapter
     }
 
