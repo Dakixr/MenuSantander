@@ -40,10 +40,10 @@ class EditMenuActivity : AppCompatActivity() {
 
         val sharedPref: SharedPreferences = getSharedPreferences("features", 0) //Private mode
 
-        removeSeparator(itemList)
 
-        val data = Gson().toJson(itemList)
         val editor = sharedPref.edit()
+        editor.putInt("otherFeaturesPosition",removeSeparator(itemList))
+        val data = Gson().toJson(itemList)
         editor.putString("yourFeatures", data)
         editor.apply()
 
@@ -51,15 +51,19 @@ class EditMenuActivity : AppCompatActivity() {
 
     }
 
-    private fun removeSeparator(list: ArrayList<ItemMenu>) {
+    //Remove separator from list and return the position where it was
+    private fun removeSeparator(list: ArrayList<ItemMenu>):Int {
 
         var i = 0
         while(i < list.size){
 
-            if(list[i].type == 2)
+            if(list[i].type == 2) {
                 list.removeAt(i)
+                return i
+            }
             else i++
         }
+        return 4//TODO default position for separator
 
     }
 

@@ -31,7 +31,7 @@ class FragmentAllFeatures : Fragment() {
         itemList.sort()
 
         view.recycler_features.layoutManager = LinearLayoutManager(view.context)
-        var mAdapter = DataAdapter(itemList)
+        var mAdapter = DataAdapter(itemList,4)
         view.recycler_features.adapter = mAdapter
 
         return view

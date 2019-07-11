@@ -15,13 +15,11 @@ private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
 
-internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>, private val positionOtherFeatures: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var POSITION_OTHER_FEATURES = 4
 
     init {
-        names.add(POSITION_OTHER_FEATURES,ItemMenu(1,"Separador",232,POSITION_OTHER_FEATURES,false,2))
+        names.add(positionOtherFeatures,ItemMenu(1,"Separador",232,positionOtherFeatures,false,2))
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -51,8 +49,15 @@ internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>) :
             viewHolder.iconItem.setImageResource(names[i].itemIcon)
             viewHolder.nameItem.text = names[i].itemName
             viewHolder.sliderItem.setImageResource(R.drawable.ic_sys_15)
+
+        } else{
+
+            if(i != names.size - 1)
+                (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.GONE
         }
     }
+
+
     override fun getItemCount(): Int {
         return names.size
     }
@@ -64,5 +69,7 @@ internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>) :
         var sliderItem: ImageView = view.findViewById(R.id.slider_item)
     }
 
-    internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view)
+    internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view) {
+        val infoTextOtherFeatures: TextView = view.findViewById(R.id.info_text_other_features)
+    }
 }

@@ -14,13 +14,12 @@ private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
 //TODO implement update value
-private const val POSICION_OTHER_FEATURES = 4
 
-internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class DataAdapter(private val names: ArrayList<ItemMenu>, private val positionOtherFeatures: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == POSICION_OTHER_FEATURES) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
+        return if (position == positionOtherFeatures) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,18 +35,19 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerVie
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
 
-        if (getItemViewType(i) == 0) {
-            val pos = if (POSICION_OTHER_FEATURES < i) {
+        if (getItemViewType(i) == ITEM_VIEWHOLDER) {
+            val pos = if (positionOtherFeatures < i) {
                 i - 1
             } else i
 
             (viewHolder as ViewHolderItem).itemName.text = names[pos].itemName
             viewHolder.itemIcon.setImageResource(names[pos].itemIcon)
-        }
+
+        } else (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.GONE
     }
 
     override fun getItemCount(): Int {
-        return if (POSICION_OTHER_FEATURES == names.size) names.size else names.size + 1
+        return if (positionOtherFeatures == names.size) names.size else names.size + 1
     }
 
     internal inner class ViewHolderItem(view: View) : RecyclerView.ViewHolder(view) {
@@ -68,7 +68,9 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerVie
 
     }
 
-    internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view)
+    internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view){
+        val infoTextOtherFeatures: TextView = view.findViewById(R.id.info_text_other_features)
+    }
 
 }
 
