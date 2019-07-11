@@ -1,13 +1,13 @@
 package com.open.dakixr.menudrawersantander.editMenu
 
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.viewpager.widget.ViewPager
 import com.google.gson.Gson
 import com.open.dakixr.menudrawersantander.R
+import com.open.dakixr.menudrawersantander.editMenu.FragmentYourFeatures.Companion.itemList
+import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import kotlinx.android.synthetic.main.activity_edit_menu.*
 
 class EditMenuActivity : AppCompatActivity() {
@@ -40,12 +40,26 @@ class EditMenuActivity : AppCompatActivity() {
 
         val sharedPref: SharedPreferences = getSharedPreferences("features", 0) //Private mode
 
-        val data = Gson().toJson(FragmentYourFeatures.itemList)
+        removeSeparator(itemList)
+
+        val data = Gson().toJson(itemList)
         val editor = sharedPref.edit()
         editor.putString("yourFeatures", data)
         editor.apply()
 
         finish()
+
+    }
+
+    private fun removeSeparator(list: ArrayList<ItemMenu>) {
+
+        var i = 0
+        while(i < list.size){
+
+            if(list[i].type == 2)
+                list.removeAt(i)
+            else i++
+        }
 
     }
 

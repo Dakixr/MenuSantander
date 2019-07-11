@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle =
             ActionBarDrawerToggle(
                 this, drawerLayout,
@@ -47,65 +46,66 @@ class MainActivity : AppCompatActivity() {
 
         ///////////////////// INSERT DATA IN SHARED PREFERENCES (TEMPORAL) //////////////////////
 
-//        val shared: SharedPreferences = getSharedPreferences("features", 0) //Private mode
-//
-//        val sharedList = ArrayList<ItemMenu>()
-//        sharedList.add(
-//            ItemMenu(
-//                1,
-//                "Mobile payment",
-//                R.drawable.ic_func_052,
-//                2,
-//                false,
-//                0
-//            )
-//        )
-//        sharedList.add(
-//            ItemMenu(
-//                2,
-//                "Payments and transfers",
-//                R.drawable.ic_ban_070,
-//                3,
-//                false,
-//                0
-//            )
-//        )
-//        sharedList.add(
-//            ItemMenu(
-//                3,
-//                "Cards",
-//                R.drawable.ic_ban_099,
-//                1,
-//                false,
-//                1
-//            )
-//        )
-//        sharedList.add(
-//            ItemMenu(
-//                4,
-//                "Global position",
-//                R.drawable.ic_serv_023,
-//                1,
-//                true,
-//                1
-//            )
-//        )
-//        sharedList.add(
-//            ItemMenu(
-//                5,
-//                "Products",
-//                R.drawable.ic_ban_089,
-//                4,
-//                false,
-//                2
-//            )
-//        )
-//
-//
-//        val data = Gson().toJson(sharedList)
-//        val editor = shared.edit()
-//        editor.putString("yourFeatures", data)
-//        editor.apply()
+        val shared: SharedPreferences = getSharedPreferences("features", 0) //Private mode
+
+        val sharedList = ArrayList<ItemMenu>()
+        sharedList.add(
+            ItemMenu(
+                1,
+                "Mobile payment",
+                R.drawable.ic_func_052,
+                2,
+                false,
+                0
+            )
+        )
+        sharedList.add(
+            ItemMenu(
+                2,
+                "Payments and transfers",
+                R.drawable.ic_ban_070,
+                3,
+                false,
+                0
+            )
+        )
+        sharedList.add(
+            ItemMenu(
+                3,
+                "Cards",
+                R.drawable.ic_ban_099,
+                1,
+                false,
+                1
+            )
+        )
+        sharedList.add(
+            ItemMenu(
+                4,
+                "Global position",
+                R.drawable.ic_serv_023,
+                1,
+                true,
+                0
+            )
+        )
+        sharedList.add(
+            ItemMenu(
+                5,
+                "Products",
+                R.drawable.ic_ban_089,
+                4,
+                false,
+                1
+            )
+        )
+
+
+        val data = Gson().toJson(sharedList)
+        val editor = shared.edit()
+        editor.putString("yourFeatures", data)
+        editor.apply()
+        ///////////////////////////////////////////////////////////////////////////
 
     }
 
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        if (item?.itemId == android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END)
             } else {
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         itemList.sort()
 
         selected_items.layoutManager = LinearLayoutManager(this)
-        var mAdapter = DataAdapter(itemList)
+        val mAdapter = DataAdapter(itemList)
         selected_items.adapter = mAdapter
     }
 

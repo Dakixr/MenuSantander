@@ -13,11 +13,14 @@ import java.util.ArrayList
 private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
+//TODO implement update value
+private const val POSICION_OTHER_FEATURES = 4
+
 internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == countNoDefaultDeleted(names)) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
+        return if (position == POSICION_OTHER_FEATURES) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,7 +37,7 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerVie
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
 
         if (getItemViewType(i) == 0) {
-            val pos = if (countNoDefaultDeleted(names) < i) {
+            val pos = if (POSICION_OTHER_FEATURES < i) {
                 i - 1
             } else i
 
@@ -44,7 +47,7 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerVie
     }
 
     override fun getItemCount(): Int {
-        return if (countNoDefaultDeleted(names) == names.size) names.size else names.size + 1
+        return if (POSICION_OTHER_FEATURES == names.size) names.size else names.size + 1
     }
 
     internal inner class ViewHolderItem(view: View) : RecyclerView.ViewHolder(view) {
@@ -67,17 +70,5 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>) : RecyclerVie
 
     internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view)
 
-
-    private fun countNoDefaultDeleted(list: ArrayList<ItemMenu>): Int {
-
-        var count = 0
-
-        list.forEach {
-            if (!it.isDeleted)
-                count++
-        }
-
-        return count
-    }
 }
 
