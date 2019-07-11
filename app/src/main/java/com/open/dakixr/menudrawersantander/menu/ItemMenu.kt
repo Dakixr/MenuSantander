@@ -10,6 +10,8 @@ class ItemMenu(
     var isDeleted: Boolean,
     var type: Int //Types->  Default: 0,  Other: 1, Separador: 2
 
+
+
 ) : Comparable<ItemMenu> {
 
     override fun compareTo(other: ItemMenu): Int {

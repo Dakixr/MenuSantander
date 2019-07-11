@@ -12,23 +12,23 @@ import androidx.core.view.MotionEventCompat
 import android.view.View.OnTouchListener
 import android.annotation.SuppressLint
 import android.view.MotionEvent.*
+import com.open.dakixr.menudrawersantander.menu.TypeItemMenu
 
 
 private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
 
-internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>,
+internal class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
                                        private val positionOtherFeatures: Int,
                                        private val dragStartListener: OnStartDragListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     init {
-        names.add(positionOtherFeatures,ItemMenu(1,"Separador",232, positionOtherFeatures,false,2))
+        items.add(positionOtherFeatures,ItemMenu(1,"Separador",232, positionOtherFeatures,false,2))
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (names[position].type == 2) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
+        return if (items[position].type == 2) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -45,7 +45,7 @@ internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>,
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
 
-        if (getItemViewType(i) == 0) {
+        if (getItemViewType(i) == ITEM_VIEWHOLDER) {
 
             (viewHolder as ViewHolderItem)
 
@@ -56,23 +56,25 @@ internal class DataAdapterYourFeatures(private val names: ArrayList<ItemMenu>,
                 false
             })
 
-            if (names[i].type != 0) {
+            val item = items[i]
+
+            if (item.type != TypeItemMenu.DEFAULT.typeItemMenu) {
                 viewHolder.deleteItem.setImageResource(com.open.dakixr.menudrawersantander.R.drawable.ic_func_031)
             }
-            viewHolder.iconItem.setImageResource(names[i].itemIcon)
-            viewHolder.nameItem.text = names[i].itemName
+            viewHolder.iconItem.setImageResource(item.itemIcon)
+            viewHolder.nameItem.text = item.itemName
             viewHolder.sliderItem.setImageResource(com.open.dakixr.menudrawersantander.R.drawable.ic_sys_15)
 
         } else{
 
-            if(i != names.size - 1)
+            if(i != items.size - 1)
                 (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.GONE
         }
     }
 
 
     override fun getItemCount(): Int {
-        return names.size
+        return items.size
     }
 
     internal inner class ViewHolderItem(view: View) : RecyclerView.ViewHolder(view) {

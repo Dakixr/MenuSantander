@@ -13,9 +13,8 @@ import java.util.ArrayList
 private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
-//TODO implement update value
 
-internal class DataAdapter(private val names: ArrayList<ItemMenu>, private val positionOtherFeatures: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class DataAdapter(private val items: ArrayList<ItemMenu>, private val positionOtherFeatures: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun getItemViewType(position: Int): Int {
@@ -40,14 +39,16 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>, private val p
                 i - 1
             } else i
 
-            (viewHolder as ViewHolderItem).itemName.text = names[pos].itemName
-            viewHolder.itemIcon.setImageResource(names[pos].itemIcon)
+            val item = items[pos]
+
+            (viewHolder as ViewHolderItem).itemName.text = item.itemName
+            viewHolder.itemIcon.setImageResource(item.itemIcon)
 
         } else (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.GONE
     }
 
     override fun getItemCount(): Int {
-        return if (positionOtherFeatures == names.size) names.size else names.size + 1
+        return if (positionOtherFeatures == items.size) items.size else items.size + 1
     }
 
     internal inner class ViewHolderItem(view: View) : RecyclerView.ViewHolder(view) {
@@ -57,12 +58,6 @@ internal class DataAdapter(private val names: ArrayList<ItemMenu>, private val p
         init {
             itemName = view.findViewById(R.id.name_item)
             itemIcon = view.findViewById(R.id.img_item)
-
-            view.setOnClickListener(object: View.OnClickListener{
-                override fun onClick(p0: View?) {
-                    Snackbar.make(p0!!, "Replace with your own action", Snackbar.LENGTH_LONG).show()
-                }
-            })
         }
 
 
