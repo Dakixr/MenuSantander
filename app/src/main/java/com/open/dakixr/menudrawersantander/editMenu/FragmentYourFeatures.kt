@@ -19,11 +19,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class FragmentYourFeatures : Fragment() {
+class FragmentYourFeatures : Fragment(),OnStartDragListener  {
+
 
     companion object {
         lateinit var itemList: ArrayList<ItemMenu>
     }
+
+    lateinit var helper: ItemTouchHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -38,12 +41,16 @@ class FragmentYourFeatures : Fragment() {
         itemList.sort()
 
         view.recycler_features.layoutManager = LinearLayoutManager(view.context)
-        val mAdapter = DataAdapterYourFeatures(itemList, positionOtherFeatures)
+        val mAdapter = DataAdapterYourFeatures(itemList, positionOtherFeatures,this)
         view.recycler_features.adapter = mAdapter
 
-        val helper =
+        helper =
             ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
 
+
+                override fun isLongPressDragEnabled(): Boolean {
+                    return false
+                }
 
                 override fun onMove(
                     recyclerView: RecyclerView,
@@ -80,6 +87,12 @@ class FragmentYourFeatures : Fragment() {
 
         return view
     }
+
+    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+        helper.startDrag(viewHolder)
+    }
+
+
 
 
 }
