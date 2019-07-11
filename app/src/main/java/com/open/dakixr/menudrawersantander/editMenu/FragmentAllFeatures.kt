@@ -26,12 +26,12 @@ class FragmentAllFeatures : Fragment() {
         val groupListType = object : TypeToken<ArrayList<ItemMenu>>() {}.type
 
         val sharedPref: SharedPreferences = activity!!.getSharedPreferences("features", 0) //Private mode
-        val itemList = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("yourFeatures", ""), groupListType)
+        val itemList = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("allFeatures", ""), groupListType)
 
         itemList.sort()
 
         view.recycler_features.layoutManager = LinearLayoutManager(view.context)
-        var mAdapter = DataAdapter(itemList,4)
+        var mAdapter = DataAdapterAllFeatures(itemList)
         view.recycler_features.adapter = mAdapter
 
         return view

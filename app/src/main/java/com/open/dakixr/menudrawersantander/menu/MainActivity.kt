@@ -8,11 +8,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.navigation_menu.*
 import com.google.gson.reflect.TypeToken
@@ -48,8 +46,8 @@ class MainActivity : AppCompatActivity() {
 
 //        val shared: SharedPreferences = getSharedPreferences("features", 0) //Private mode
 //
-//        val sharedList = ArrayList<ItemMenu>()
-//        sharedList.add(
+//        val yourFeatures = ArrayList<ItemMenu>()
+//        yourFeatures.add(
 //            ItemMenu(
 //                1,
 //                "Mobile payment",
@@ -59,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 //                0
 //            )
 //        )
-//        sharedList.add(
+//        yourFeatures.add(
 //            ItemMenu(
 //                2,
 //                "Payments and transfers",
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 //                0
 //            )
 //        )
-//        sharedList.add(
+//        yourFeatures.add(
 //            ItemMenu(
 //                3,
 //                "Cards",
@@ -79,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 //                1
 //            )
 //        )
-//        sharedList.add(
+//        yourFeatures.add(
 //            ItemMenu(
 //                4,
 //                "Global position",
@@ -89,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 //                0
 //            )
 //        )
-//        sharedList.add(
+//        yourFeatures.add(
 //            ItemMenu(
 //                5,
 //                "Products",
@@ -99,11 +97,34 @@ class MainActivity : AppCompatActivity() {
 //                1
 //            )
 //        )
+//        val allFeatures = ArrayList<ItemMenu>()
+//        allFeatures.add(
+//            ItemMenu(
+//                6, "Accounts", R.drawable.ic_ban_001_b, 1, false,1
+//            )
+//        )
+//        allFeatures.add(
+//            ItemMenu(
+//                6, "Utilities", R.drawable.ic_serv_098, 2, false,1
+//            )
+//        )
+//        allFeatures.add(
+//            ItemMenu(
+//                6, "Funds", R.drawable.ic_ban_ban_034, 3, false,1
+//            )
+//        )
+//        allFeatures.add(
+//            ItemMenu(
+//                6, "Loans", R.drawable.ic_ban_025, 4, false,1
+//            )
+//        )
 //
 //
-//        val data = Gson().toJson(sharedList)
+//        val data = Gson().toJson(yourFeatures)
+//        val data2 = Gson().toJson(allFeatures)
 //        val editor = shared.edit()
 //        editor.putString("yourFeatures", data)
+//        editor.putString("allFeatures",data2)
 //        editor.putInt("otherFeaturesPosition",2)
 //        editor.apply()
 //
