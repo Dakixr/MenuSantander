@@ -12,12 +12,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 import com.open.dakixr.menudrawersantander.R
-import com.open.dakixr.menudrawersantander.menu.DataAdapter
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import kotlinx.android.synthetic.main.fragment_edit.view.*
 
 
 class FragmentAllFeatures : Fragment() {
+
+    companion object{
+        lateinit var adapterAllFeatures: DataAdapterAllFeatures
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -26,16 +29,15 @@ class FragmentAllFeatures : Fragment() {
         val groupListType = object : TypeToken<ArrayList<ItemMenu>>() {}.type
 
         val sharedPref: SharedPreferences = activity!!.getSharedPreferences("features", 0) //Private mode
-        val itemList = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("yourFeatures", ""), groupListType)
+        val listAllFeatures = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("allFeatures", ""), groupListType)
 
-        itemList.sort()
+        listAllFeatures.sort()
 
         view.recycler_features.layoutManager = LinearLayoutManager(view.context)
-        var mAdapter = DataAdapter(itemList,4)
-        view.recycler_features.adapter = mAdapter
+        adapterAllFeatures = DataAdapterAllFeatures(listAllFeatures)
+        view.recycler_features.adapter = adapterAllFeatures
 
         return view
     }
-
 
 }
