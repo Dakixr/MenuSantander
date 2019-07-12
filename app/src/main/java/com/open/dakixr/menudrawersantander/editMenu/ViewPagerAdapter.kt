@@ -1,16 +1,16 @@
 package com.open.dakixr.menudrawersantander.editMenu
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.open.dakixr.menudrawersantander.R
 
 private const val POS_FRAGMENT_YOUR_FEATURES = 0
 private const val POS_FRAGMENT_ALL_FEATURES = 1
 
-class ViewPagerAdapter(fragmentManager: FragmentManager, titles: ArrayList<String>) : FragmentPagerAdapter(fragmentManager) {
+class ViewPagerAdapter(fragmentManager: FragmentManager,private val context: Context) : FragmentPagerAdapter(fragmentManager) {
 
-
-    private val titleNames = titles
 
     override fun getCount(): Int {
         //There are only 2 fragments to display YOUR_FEATURES, ALL_FEATURES
@@ -29,8 +29,8 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, titles: ArrayList<Strin
     override fun getPageTitle(position: Int): CharSequence? {
 
         return when(position){
-            POS_FRAGMENT_YOUR_FEATURES-> titleNames[0]
-            POS_FRAGMENT_ALL_FEATURES-> titleNames[1]
+            POS_FRAGMENT_YOUR_FEATURES-> context.getString(R.string.your_features)
+            POS_FRAGMENT_ALL_FEATURES-> context.getString(R.string.all_features)
             else -> null
         }
     }

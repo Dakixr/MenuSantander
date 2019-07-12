@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.View
 import com.google.gson.Gson
 import com.open.dakixr.menudrawersantander.R
-import com.open.dakixr.menudrawersantander.editMenu.FragmentYourFeatures.Companion.itemList
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import kotlinx.android.synthetic.main.activity_edit_menu.*
 
 class EditMenuActivity : AppCompatActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,14 +19,11 @@ class EditMenuActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_edit_menu)
 
-        val titles = arrayListOf<String>()
-        titles.add(getString(R.string.your_features))
-        titles.add(getString(R.string.all_features))
-
-        val adapter = ViewPagerAdapter(supportFragmentManager,titles)
+        val adapter = ViewPagerAdapter(supportFragmentManager,this)
         pager.adapter = adapter
 
         tabs.setupWithViewPager(pager)
+        tabs.setTabTextColors(getColor(R.color.medium_grey), getColor(R.color.dark_grey))
 
     }
 
@@ -42,9 +37,11 @@ class EditMenuActivity : AppCompatActivity() {
 
 
         val editor = sharedPref.edit()
-        editor.putInt("otherFeaturesPosition",removeSeparator(itemList))
-        val data = Gson().toJson(itemList)
-        editor.putString("yourFeatures", data)
+        editor.putInt("otherFeaturesPosition",removeSeparator(DataAdapterYourFeatures.listYourFeatures))
+        val listYour = Gson().toJson(DataAdapterYourFeatures.listYourFeatures)
+        val listAll = Gson().toJson(DataAdapterAllFeatures.listAllFeatures)
+        editor.putString("yourFeatures", listYour)
+        editor.putString("allFeatures", listAll)
         editor.apply()
 
         finish()
