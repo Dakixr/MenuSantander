@@ -38,7 +38,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="8dp"
-                android:onClick="doneButton"/>
+                android:onClick="doneButton"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,9 +56,8 @@
             app:tabTextColor="@color/medium_grey"
             app:tabTextAppearance="@style/CustomTextAppearanceTab"
             app:tabIndicatorColor="@color/santan_red"
-            >
+            />
 
-    </com.google.android.material.tabs.TabLayout>
     <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -67,8 +67,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/pager"
-            android:overScrollMode="never">
-
-    </androidx.viewpager.widget.ViewPager>
+            android:overScrollMode="never"/>
 
 </LinearLayout>

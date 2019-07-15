@@ -1,11 +1,10 @@
 package com.open.dakixr.menudrawersantander.editMenu
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.google.gson.Gson
 import com.open.dakixr.menudrawersantander.R
+import com.open.dakixr.menudrawersantander.menu.AccessSharedPref
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import kotlinx.android.synthetic.main.activity_edit_menu.*
 
@@ -14,10 +13,9 @@ class EditMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_menu)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-
-        setContentView(R.layout.activity_edit_menu)
 
         val adapter = ViewPagerAdapter(supportFragmentManager,this)
         pager.adapter = adapter
@@ -33,35 +31,17 @@ class EditMenuActivity : AppCompatActivity() {
 
     fun doneButton(view: View){
 
-        val sharedPref: SharedPreferences = getSharedPreferences("features", 0) //Private mode
+        //Update internal position in ItemMenu
+        var i = 0
+        DataAdapterYourFeatures.listYourFeatures.forEach {
+            it.position = i++
+        }
 
-
-        val editor = sharedPref.edit()
-        editor.putInt("otherFeaturesPosition",removeSeparator(DataAdapterYourFeatures.listYourFeatures))
-        val listYour = Gson().toJson(DataAdapterYourFeatures.listYourFeatures)
-        val listAll = Gson().toJson(DataAdapterAllFeatures.listAllFeatures)
-        editor.putString("yourFeatures", listYour)
-        editor.putString("allFeatures", listAll)
-        editor.apply()
+        val accessSharedPref = AccessSharedPref(this)
+        accessSharedPref.writeAllFeatures(DataAdapterAllFeatures.listAllFeatures)
+        accessSharedPref.writeYourFeatures(DataAdapterYourFeatures.listYourFeatures)
+        accessSharedPref.writePosOtherFeatures(ItemMenu.removeSeparator(DataAdapterYourFeatures.listYourFeatures))
 
         finish()
-
     }
-
-    //Remove separator from list and return the position where it was
-    private fun removeSeparator(list: ArrayList<ItemMenu>):Int {
-
-        var i = 0
-        while(i < list.size){
-
-            if(list[i].type == 2) {
-                list.removeAt(i)
-                return i
-            }
-            else i++
-        }
-        return 4//TODO default position for separator
-
-    }
-
 }

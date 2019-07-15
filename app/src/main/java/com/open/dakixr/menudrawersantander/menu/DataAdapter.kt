@@ -14,12 +14,13 @@ private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
 
-internal class DataAdapter(private val items: ArrayList<ItemMenu>, private val positionOtherFeatures: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class DataAdapter(private val items: ArrayList<ItemMenu>,
+                           private val positionOtherFeatures: Int?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == positionOtherFeatures) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
-    }
+        return if (positionOtherFeatures!=null && position == positionOtherFeatures) OTHER_FEATURES_VIEWHOLDER else ITEM_VIEWHOLDER
+}
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -35,7 +36,7 @@ internal class DataAdapter(private val items: ArrayList<ItemMenu>, private val p
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
 
         if (getItemViewType(i) == ITEM_VIEWHOLDER) {
-            val pos = if (positionOtherFeatures < i) {
+            val pos = if (positionOtherFeatures!=null && positionOtherFeatures < i) {
                 i - 1
             } else i
 
@@ -52,15 +53,8 @@ internal class DataAdapter(private val items: ArrayList<ItemMenu>, private val p
     }
 
     internal inner class ViewHolderItem(view: View) : RecyclerView.ViewHolder(view) {
-        var itemName: TextView
-        var itemIcon: ImageView
-
-        init {
-            itemName = view.findViewById(R.id.name_item)
-            itemIcon = view.findViewById(R.id.img_item)
-        }
-
-
+        val itemName: TextView = view.findViewById(R.id.name_item)
+        val itemIcon: ImageView = view.findViewById(R.id.img_item)
     }
 
     internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view){

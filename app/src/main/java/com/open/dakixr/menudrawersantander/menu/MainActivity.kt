@@ -132,13 +132,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    override fun onStart() {
-        super.onStart()
-        setUpMenu()
-    }
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -156,19 +149,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    override fun onStart() {
+        super.onStart()
+        setUpMenu()
+    }
+
+
     private fun setUpMenu() {
 
-        val groupListType = object : TypeToken<ArrayList<ItemMenu>>() {}.type
-
-        val sharedPref: SharedPreferences = getSharedPreferences("features", 0) //Private mode
-        val itemList = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("yourFeatures", ""), groupListType)
-        val positionOtherFeatures = sharedPref.getInt("otherFeaturesPosition",4)//TODO CHANGE DEFAULT VALUE
+        val accessSharedPref = AccessSharedPref(this)
+        val itemList = accessSharedPref.readYourFeatures()
+        val positionOtherFeatures = accessSharedPref.readPosOtherFeatures()
 
         itemList.sort()
 
         selected_items.layoutManager = LinearLayoutManager(this)
-        val mAdapter = DataAdapter(itemList,positionOtherFeatures)
-        selected_items.adapter = mAdapter
+        selected_items.adapter = DataAdapter(itemList,positionOtherFeatures)
     }
 
     fun intentEditMenu(view: View){
