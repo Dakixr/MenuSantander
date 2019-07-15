@@ -7,6 +7,13 @@ import com.open.dakixr.menudrawersantander.R
 import com.open.dakixr.menudrawersantander.menu.AccessSharedPref
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import kotlinx.android.synthetic.main.activity_edit_menu.*
+import android.graphics.Typeface
+import android.widget.TextView
+import android.view.ViewGroup
+
+
+
+
 
 class EditMenuActivity : AppCompatActivity() {
 
@@ -22,7 +29,6 @@ class EditMenuActivity : AppCompatActivity() {
 
         tabs.setupWithViewPager(pager)
         tabs.setTabTextColors(getColor(R.color.medium_grey), getColor(R.color.dark_grey))
-
     }
 
     fun cancelButton(view: View){
@@ -38,10 +44,12 @@ class EditMenuActivity : AppCompatActivity() {
         }
 
         val accessSharedPref = AccessSharedPref(this)
+        accessSharedPref.writePosOtherFeatures(ItemMenu.removeSeparator(DataAdapterYourFeatures.listYourFeatures))
         accessSharedPref.writeAllFeatures(DataAdapterAllFeatures.listAllFeatures)
         accessSharedPref.writeYourFeatures(DataAdapterYourFeatures.listYourFeatures)
-        accessSharedPref.writePosOtherFeatures(ItemMenu.removeSeparator(DataAdapterYourFeatures.listYourFeatures))
+
 
         finish()
     }
+
 }

@@ -27,6 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_item"
             android:layout_marginStart="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/santander_text_regular"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

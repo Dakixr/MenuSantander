@@ -39,16 +39,16 @@ class ItemMenu(
             list.add(pos,ItemMenu(0,"Separator",0, pos,false,TypeItemMenu.SEPARATOR.value))
         }
 
-//        fun getPositionOtherFeatures(list: ArrayList<ItemMenu>):Int? {
-//            var i = 0
-//            while(i < list.size){
-//                if(list[i].type == TypeItemMenu.SEPARATOR.value) {
-//                    return i
-//                }
-//                else i++
-//            }
-//            return null
-//        }
+        fun getPositionOtherFeatures(list: ArrayList<ItemMenu>):Int {
+            var i = 0
+            while(i < list.size){
+                if(list[i].type == TypeItemMenu.SEPARATOR.value) {
+                    return i
+                }
+                else i++
+            }
+            return list.size
+        }
     }
 
 
