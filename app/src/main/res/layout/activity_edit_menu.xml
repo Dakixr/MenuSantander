@@ -14,7 +14,7 @@
             android:layout_height="56dp"
             android:background="@color/white">
 
-        <TextView
+        <Button
                 android:id="@+id/edit_menu_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -23,22 +23,35 @@
                 android:textColor="@color/dark_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="24dp"
-                android:layout_marginBottom="8dp"
                 android:onClick="cancelButton"
+                android:fontFamily="@font/santander_text_regular"
+
+                android:textAllCaps="false"
+                android:background="@color/white"
+                android:stateListAnimator="@null"
+                android:textAlignment="textStart"
         />
-        <TextView
+        <Button
                 android:id="@+id/edit_menu_done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/done"
                 android:textSize="16sp"
                 android:textColor="@color/dark_grey"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="doneButton"/>
+                android:onClick="doneButton"
+                android:fontFamily="@font/santander_text_regular"
+                android:textAlignment="textEnd"
+
+                android:textAllCaps="false"
+                android:background="@color/white"
+                android:stateListAnimator="@null"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,9 +68,8 @@
             app:tabTextColor="@color/medium_grey"
             app:tabTextAppearance="@style/CustomTextAppearanceTab"
             app:tabIndicatorColor="@color/santan_red"
-            >
+            />
 
-    </com.google.android.material.tabs.TabLayout>
     <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -67,8 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/pager"
-            android:overScrollMode="never">
-
-    </androidx.viewpager.widget.ViewPager>
+            android:overScrollMode="never"/>
 
 </LinearLayout>

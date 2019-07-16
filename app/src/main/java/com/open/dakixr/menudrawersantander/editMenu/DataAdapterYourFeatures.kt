@@ -10,9 +10,9 @@ import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import java.util.ArrayList
 import androidx.core.view.MotionEventCompat
 import android.annotation.SuppressLint
-import android.util.Log
+import android.content.res.Resources
 import android.view.MotionEvent.*
-import com.open.dakixr.menudrawersantander.R
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.open.dakixr.menudrawersantander.menu.TypeItemMenu
 
 
@@ -20,17 +20,22 @@ private const val ITEM_VIEWHOLDER = 0
 private const val OTHER_FEATURES_VIEWHOLDER = 1
 
 
-class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
-                                       positionOtherFeatures: Int,
-                                       private val dragStartListener: OnStartDragListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DataAdapterYourFeatures(
+    private val items: ArrayList<ItemMenu>,
+    positionOtherFeatures: Int?,
+    private val dragStartListener: OnStartDragListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object{
+    private val Int.toDP: Int
+        get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+    companion object {
         lateinit var listYourFeatures: ArrayList<ItemMenu>
     }
 
     init {
         listYourFeatures = items
-        items.add(positionOtherFeatures,ItemMenu(1,"Separator",1, positionOtherFeatures,false,TypeItemMenu.SEPARATOR.value))
+        ItemMenu.addSeparator(items, positionOtherFeatures)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -40,8 +45,8 @@ class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val layout = when (viewType) {
-            ITEM_VIEWHOLDER -> R.layout.item_your_features
-            else -> R.layout.item_other_features
+            ITEM_VIEWHOLDER -> com.open.dakixr.menudrawersantander.R.layout.item_your_features
+            else -> com.open.dakixr.menudrawersantander.R.layout.item_other_features
         }
 
         val view = LayoutInflater.from(viewGroup.context).inflate(layout, viewGroup, false)
@@ -55,7 +60,7 @@ class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
 
             (viewHolder as ViewHolderItem)
 
-            viewHolder.sliderItem.setOnTouchListener{ v, event ->
+            viewHolder.draggableZone.setOnTouchListener { v, event ->
                 if (MotionEventCompat.getActionMasked(event) == ACTION_DOWN) {
                     dragStartListener.onStartDrag(viewHolder)
                 }
@@ -65,7 +70,7 @@ class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
             val item = items[i]
 
             if (item.type != TypeItemMenu.DEFAULT.value) {
-                viewHolder.deleteItem.setImageResource(R.drawable.ic_func_031)
+                viewHolder.deleteItem.setImageResource(com.open.dakixr.menudrawersantander.R.drawable.ic_func_031)
 
                 viewHolder.deleteItem.setOnClickListener {
 
@@ -79,21 +84,33 @@ class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
 
                         item.position = destinationPos
 
+                        val posOtherFeatures = ItemMenu.getPositionOtherFeatures(listYourFeatures)
+                        FragmentYourFeatures.adapterYourFeatures.notifyItemChanged(posOtherFeatures)
+
                         DataAdapterAllFeatures.listAllFeatures.add(item)
                         FragmentAllFeatures.adapterAllFeatures.notifyItemInserted(destinationPos)
                     }
 
                 }
+            } else {
+                viewHolder.deleteItem.visibility = View.GONE
+
+                val parameter = viewHolder.iconItem.layoutParams as ConstraintLayout.LayoutParams
+
+                parameter.marginStart = 24.toDP
+                viewHolder.iconItem.layoutParams = parameter
+
             }
 
             viewHolder.iconItem.setImageResource(item.itemIcon)
             viewHolder.nameItem.text = item.itemName
-            viewHolder.sliderItem.setImageResource(R.drawable.ic_sys_15)
+            viewHolder.sliderItem.setImageResource(com.open.dakixr.menudrawersantander.R.drawable.ic_sys_15)
 
-        } else{
+        } else {
 
-            if(i != items.size - 1)
+            if (i != items.size - 1)
                 (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.GONE
+            else  (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.VISIBLE
         }
     }
 
@@ -102,13 +119,15 @@ class DataAdapterYourFeatures(private val items: ArrayList<ItemMenu>,
     }
 
     internal inner class ViewHolderItem(view: View) : RecyclerView.ViewHolder(view) {
-        var deleteItem: ImageView = view.findViewById(R.id.delete_item)
-        var iconItem: ImageView = view.findViewById(R.id.icon_item)
-        var nameItem: TextView = view.findViewById(R.id.name_item)
-        var sliderItem: ImageView = view.findViewById(R.id.slider_item)
+        var deleteItem: ImageView = view.findViewById(com.open.dakixr.menudrawersantander.R.id.delete_item)
+        var iconItem: ImageView = view.findViewById(com.open.dakixr.menudrawersantander.R.id.icon_item)
+        var nameItem: TextView = view.findViewById(com.open.dakixr.menudrawersantander.R.id.name_item)
+        var sliderItem: ImageView = view.findViewById(com.open.dakixr.menudrawersantander.R.id.slider_item)
+        var draggableZone: ConstraintLayout = view.findViewById(com.open.dakixr.menudrawersantander.R.id.draggable_zone)
     }
 
     internal inner class ViewHolderOtherFeatures(view: View) : RecyclerView.ViewHolder(view) {
-        val infoTextOtherFeatures: TextView = view.findViewById(R.id.info_text_other_features)
+        val infoTextOtherFeatures: TextView =
+            view.findViewById(com.open.dakixr.menudrawersantander.R.id.info_text_other_features)
     }
 }

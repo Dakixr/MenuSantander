@@ -9,7 +9,8 @@ import com.open.dakixr.menudrawersantander.R
 private const val POS_FRAGMENT_YOUR_FEATURES = 0
 private const val POS_FRAGMENT_ALL_FEATURES = 1
 
-class ViewPagerAdapter(fragmentManager: FragmentManager,private val context: Context) : FragmentPagerAdapter(fragmentManager) {
+class ViewPagerAdapter(fragmentManager: FragmentManager,
+                       private val context: Context) : FragmentPagerAdapter(fragmentManager) {
 
 
     override fun getCount(): Int {

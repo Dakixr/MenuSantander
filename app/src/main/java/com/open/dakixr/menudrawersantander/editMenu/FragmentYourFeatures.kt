@@ -1,7 +1,6 @@
 package com.open.dakixr.menudrawersantander.editMenu
 
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.open.dakixr.menudrawersantander.R
+import com.open.dakixr.menudrawersantander.menu.AccessSharedPref
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import kotlinx.android.synthetic.main.fragment_edit.view.*
 import java.util.*
@@ -28,15 +27,12 @@ class FragmentYourFeatures : Fragment(),OnStartDragListener  {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(com.open.dakixr.menudrawersantander.R.layout.fragment_edit, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit, container, false)
 
-        val groupListType = object : TypeToken<ArrayList<ItemMenu>>() {}.type
+        val accessSharedPref = AccessSharedPref(view.context)
+        val listYourFeatures = accessSharedPref.readYourFeatures()
+        val positionOtherFeatures = accessSharedPref.readPosOtherFeatures()
 
-        val sharedPref: SharedPreferences = activity!!.getSharedPreferences("features", 0) //Private mode
-        val listYourFeatures = Gson().fromJson<ArrayList<ItemMenu>>(sharedPref.getString("yourFeatures", ""), groupListType)
-        val positionOtherFeatures = sharedPref.getInt("otherFeaturesPosition", 4)
-
-        listYourFeatures.sort()
 
         view.recycler_features.layoutManager = LinearLayoutManager(view.context)
         adapterYourFeatures = DataAdapterYourFeatures(listYourFeatures, positionOtherFeatures,this)
@@ -64,10 +60,9 @@ class FragmentYourFeatures : Fragment(),OnStartDragListener  {
                     adapterYourFeatures.notifyItemMoved(posDragged, posTarget)
 
 
-                    var i = 0
-                    listYourFeatures.forEach {
-                        it.position = i++
-                    }
+                    val posOtherFeatures = ItemMenu.getPositionOtherFeatures(DataAdapterYourFeatures.listYourFeatures)
+                    FragmentYourFeatures.adapterYourFeatures.notifyItemChanged(posOtherFeatures)
+
 
                     return false
                 }
