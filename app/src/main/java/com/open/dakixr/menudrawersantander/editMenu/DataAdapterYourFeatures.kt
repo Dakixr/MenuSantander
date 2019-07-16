@@ -84,6 +84,9 @@ class DataAdapterYourFeatures(
 
                         item.position = destinationPos
 
+                        val posOtherFeatures = ItemMenu.getPositionOtherFeatures(listYourFeatures)
+                        FragmentYourFeatures.adapterYourFeatures.notifyItemChanged(posOtherFeatures)
+
                         DataAdapterAllFeatures.listAllFeatures.add(item)
                         FragmentAllFeatures.adapterAllFeatures.notifyItemInserted(destinationPos)
                     }
@@ -107,6 +110,7 @@ class DataAdapterYourFeatures(
 
             if (i != items.size - 1)
                 (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.GONE
+            else  (viewHolder as ViewHolderOtherFeatures).infoTextOtherFeatures.visibility = View.VISIBLE
         }
     }
 

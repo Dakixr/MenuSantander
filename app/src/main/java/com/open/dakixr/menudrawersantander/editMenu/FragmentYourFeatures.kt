@@ -1,7 +1,6 @@
 package com.open.dakixr.menudrawersantander.editMenu
 
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.open.dakixr.menudrawersantander.R
 import com.open.dakixr.menudrawersantander.menu.AccessSharedPref
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
@@ -36,7 +33,6 @@ class FragmentYourFeatures : Fragment(),OnStartDragListener  {
         val listYourFeatures = accessSharedPref.readYourFeatures()
         val positionOtherFeatures = accessSharedPref.readPosOtherFeatures()
 
-        listYourFeatures.sort()
 
         view.recycler_features.layoutManager = LinearLayoutManager(view.context)
         adapterYourFeatures = DataAdapterYourFeatures(listYourFeatures, positionOtherFeatures,this)
@@ -62,6 +58,10 @@ class FragmentYourFeatures : Fragment(),OnStartDragListener  {
 
                     Collections.swap(DataAdapterYourFeatures.listYourFeatures, posDragged, posTarget)
                     adapterYourFeatures.notifyItemMoved(posDragged, posTarget)
+
+
+                    val posOtherFeatures = ItemMenu.getPositionOtherFeatures(DataAdapterYourFeatures.listYourFeatures)
+                    FragmentYourFeatures.adapterYourFeatures.notifyItemChanged(posOtherFeatures)
 
 
                     return false

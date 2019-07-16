@@ -1,7 +1,6 @@
 package com.open.dakixr.menudrawersantander.menu
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -9,13 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.navigation_menu.*
-import com.google.gson.reflect.TypeToken
 import com.open.dakixr.menudrawersantander.R
 import com.open.dakixr.menudrawersantander.editMenu.EditMenuActivity
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -161,8 +157,6 @@ class MainActivity : AppCompatActivity() {
         val accessSharedPref = AccessSharedPref(this)
         val itemList = accessSharedPref.readYourFeatures()
         val positionOtherFeatures = accessSharedPref.readPosOtherFeatures()
-
-        itemList.sort()
 
         selected_items.layoutManager = LinearLayoutManager(this)
         selected_items.adapter = DataAdapter(itemList,positionOtherFeatures)

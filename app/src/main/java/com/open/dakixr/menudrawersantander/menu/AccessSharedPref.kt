@@ -17,7 +17,11 @@ class AccessSharedPref(context: Context) {
     private val groupListType = object : TypeToken<java.util.ArrayList<ItemMenu>>() {}.type
     private val gson = Gson()
 
-    fun readYourFeatures():ArrayList<ItemMenu> = gson.fromJson(sharedPref.getString(NAME_YOUR_FEATURES, ""), groupListType)
+    fun readYourFeatures():ArrayList<ItemMenu>{
+        val list = gson.fromJson<ArrayList<ItemMenu>>(sharedPref.getString(NAME_YOUR_FEATURES, ""), groupListType)
+        list.sort()
+        return list
+    }
 
     fun readAllFeatures():ArrayList<ItemMenu> = gson.fromJson(sharedPref.getString(NAME_ALL_FEATURES, ""), groupListType)
 
