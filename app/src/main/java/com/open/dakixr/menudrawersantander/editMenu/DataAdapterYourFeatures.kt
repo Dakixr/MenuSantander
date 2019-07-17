@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.open.dakixr.menudrawersantander.menu.ItemMenu
 import java.util.ArrayList
-import androidx.core.view.MotionEventCompat
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.view.MotionEvent.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.open.dakixr.menudrawersantander.menu.TypeItemMenu
+
+
 
 
 private const val ITEM_VIEWHOLDER = 0
@@ -60,8 +61,8 @@ class DataAdapterYourFeatures(
 
             (viewHolder as ViewHolderItem)
 
-            viewHolder.draggableZone.setOnTouchListener { v, event ->
-                if (MotionEventCompat.getActionMasked(event) == ACTION_DOWN) {
+            viewHolder.draggableZone.setOnTouchListener { _ , event ->
+                if (event.action and ACTION_MASK == ACTION_DOWN) {
                     dragStartListener.onStartDrag(viewHolder)
                 }
                 false

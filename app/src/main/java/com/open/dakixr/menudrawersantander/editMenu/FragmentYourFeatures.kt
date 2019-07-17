@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.open.dakixr.menudrawersantander.R
@@ -60,14 +61,19 @@ class FragmentYourFeatures : Fragment(),OnStartDragListener  {
                     adapterYourFeatures.notifyItemMoved(posDragged, posTarget)
 
 
-                    val posOtherFeatures = ItemMenu.getPositionOtherFeatures(DataAdapterYourFeatures.listYourFeatures)
-                    FragmentYourFeatures.adapterYourFeatures.notifyItemChanged(posOtherFeatures)
-
-
                     return false
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+
+                override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                    super.onSelectedChanged(viewHolder, actionState)
+
+                    if(actionState == ACTION_STATE_IDLE){
+                        val posOtherFeatures = ItemMenu.getPositionOtherFeatures(DataAdapterYourFeatures.listYourFeatures)
+                        FragmentYourFeatures.adapterYourFeatures.notifyItemChanged(posOtherFeatures)
+                    }
+                }
             })
 
 
